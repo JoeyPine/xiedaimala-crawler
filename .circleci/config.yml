@@ -9,11 +9,8 @@ jobs:
       - restore_cache:
           key: hcsp-{{ checksum "pom.xml" }}
       - run:
-          name: Verify whitelist
-          command: ./.circleci/verifyWhitelist.sh
-      - run:
-          name: Run Maven verify
-          command: mvn clean verify
+          name: Run Maven tests
+          command: mvn clean tests
       - save_cache: # saves the project dependencies
           paths:
             - ~/.m2
