@@ -1,7 +1,5 @@
 package com.github.hcsp;
 
-import java.util.Date;
-
 public class News {
     private Integer id;
     private String url;
