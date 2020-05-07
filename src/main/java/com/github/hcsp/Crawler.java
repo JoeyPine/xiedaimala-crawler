@@ -15,7 +15,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("DMI_CONSTANT_DB_PASSWORD")
 public class Crawler {
 
     CrawlerDao dao = new JdbcCrawlerDao();
@@ -45,7 +44,6 @@ public class Crawler {
         }
     }
 
-    @SuppressWarnings("DMI_CONSTANT_DB_PASSWORD")
     public static void main(String[] args) throws IOException, SQLException {
         new Crawler().run();
     }
