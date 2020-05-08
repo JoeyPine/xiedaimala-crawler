@@ -3,9 +3,14 @@ package com.github.hcsp;
 public class News {
     private Integer id;
     private String url;
-    private String conent;
+    private String content;
     private String title;
 
+    public News(String url, String content, String title) {
+        this.url = url;
+        this.content = content;
+        this.title = title;
+    }
 
     public Integer getId() {
         return id;
@@ -23,12 +28,12 @@ public class News {
         this.url = url;
     }
 
-    public String getConent() {
-        return conent;
+    public String getContent() {
+        return content;
     }
 
-    public void setConent(String conent) {
-        this.conent = conent;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getTitle() {

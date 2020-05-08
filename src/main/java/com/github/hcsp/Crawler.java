@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class Crawler {
 
-    CrawlerDao dao = new JdbcCrawlerDao();
+    CrawlerDao dao = new MyBatisCrawlerDao();
 
     public void run() throws SQLException, IOException {
 
@@ -39,7 +39,7 @@ public class Crawler {
                 //假如是一个新闻的详情页，就存入数据库，否则什么都不做
                 storeIntoDatabaseIfItIsNewsPage(doc, link);
 
-                dao.updateDatabase(link, "INSERT INTO LINKS_ALREADY_PROCESSED (link) values (?)");
+                dao.insertProcessesLink(link);
             }
         }
     }
@@ -57,7 +57,7 @@ public class Crawler {
             }
 
             if (!href.toLowerCase().startsWith("javascript")) {
-                dao.updateDatabase(href, "INSERT INTO LINKS_TO_BE_PROCESSED (link) values (?)");
+                dao.insertLinkToBeProcessed(href);
             }
 
         }

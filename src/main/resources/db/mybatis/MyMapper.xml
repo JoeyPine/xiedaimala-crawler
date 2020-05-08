@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="com.github.hcsp.MyMapper">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表 -->
+    <select id="selectNextAvailableLink"  resultType="String">
+        select link from LINKS_TO_BE_PROCESSED LIMIT 1
+    </select>
+    <delete id="deleteLink" parameterType="String">
+        DELETE FROM LINKS_TO_BE_PROCESSED WHERE LINK = #{link}
+    </delete>
+    <insert id="insertNews" parameterType="com.github.hcsp.News">
+        INSERT INTO NEWS (url ,title ,content ,create_at ,modified_at)
+        values( #{url} , #{title} , #{content} , now() , now() )
+    </insert>
+    <select id="countLink" parameterType="String" resultType="int">
+        select count(link) from LINKS_ALREADY_PROCESSED WHERE link = #{link}
+    </select>
+    <insert id="insertLink" parameterType="HashMap">
+        insert into
+        <choose>
+            <when test="tableName == 'links_already_processed' ">
+                inks_already_processed
+            </when>
+            <otherwise>
+                LINKS_TO_BE_PROCESSED
+            </otherwise>
+        </choose>
+            (link)
+            values #{link}
+    </insert>
+</mapper>
