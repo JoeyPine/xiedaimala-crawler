@@ -17,14 +17,14 @@ import java.util.stream.Collectors;
 
 public class Crawler extends Thread {
 
-    CrawlerDao dao ;
+    CrawlerDao dao;
 
     public Crawler(CrawlerDao dao) {
         this.dao = dao;
     }
 
     @Override
-    public void run()  {
+    public void run() {
         try {
             String link;
             //从数据库加载下一个链接，如果能加载到，则进行循环
@@ -47,7 +47,7 @@ public class Crawler extends Thread {
                     dao.insertProcessesLink(link);
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
