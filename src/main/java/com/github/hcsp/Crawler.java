@@ -15,37 +15,41 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class Crawler {
+public class Crawler extends Thread {
 
-    CrawlerDao dao = new MyBatisCrawlerDao();
+    CrawlerDao dao ;
 
-    public void run() throws SQLException, IOException {
-
-        String link;
-        //从数据库加载下一个链接，如果能加载到，则进行循环
-        while ((link = dao.getNextLinkThenDelete()) != null) {
-
-            //询问数据库，当前链接是不是已经被处理过了
-            if (dao.isLinkProcessed(link)) {
-                continue;
-            }
-            if (isInterestingLink(link)) {
-                System.out.println(link);
-                Document doc = httpGetAndParseHtml(link);
-
-                //attr获取该属性值，添加到链接池
-                parseUrlsFromPageAndStoreIntoDatabase(doc);
-
-                //假如是一个新闻的详情页，就存入数据库，否则什么都不做
-                storeIntoDatabaseIfItIsNewsPage(doc, link);
-
-                dao.insertProcessesLink(link);
-            }
-        }
+    public Crawler(CrawlerDao dao) {
+        this.dao = dao;
     }
 
-    public static void main(String[] args) throws IOException, SQLException {
-        new Crawler().run();
+    @Override
+    public void run()  {
+        try {
+            String link;
+            //从数据库加载下一个链接，如果能加载到，则进行循环
+            while ((link = dao.getNextLinkThenDelete()) != null) {
+
+                //询问数据库，当前链接是不是已经被处理过了
+                if (dao.isLinkProcessed(link)) {
+                    continue;
+                }
+                if (isInterestingLink(link)) {
+                    System.out.println(link);
+                    Document doc = httpGetAndParseHtml(link);
+
+                    //attr获取该属性值，添加到链接池
+                    parseUrlsFromPageAndStoreIntoDatabase(doc);
+
+                    //假如是一个新闻的详情页，就存入数据库，否则什么都不做
+                    storeIntoDatabaseIfItIsNewsPage(doc, link);
+
+                    dao.insertProcessesLink(link);
+                }
+            }
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     private void parseUrlsFromPageAndStoreIntoDatabase(Document doc) throws SQLException {

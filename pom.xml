@@ -27,6 +27,12 @@
             <version>1.4.199</version>
             <scope>compile</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.17</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -131,7 +137,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>6.4.1</version>
                 <configuration>
-                    <url>jdbc:h2:file:/Users/Song/IdeaProjects/xiedaimala-crawler/news</url>
+                    <url>jdbc:mysql://localhost:3306/news?characterEncoding=utf-8</url>
                     <user>root</user>
                     <password>root</password>
                 </configuration>
