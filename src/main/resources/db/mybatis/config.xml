@@ -4,6 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <!-- 根标签 -->
 <configuration>
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+    </settings>
     <!-- 环境，可以配置多个，default：指定采用哪个环境 -->
     <environments default="development">
         <!-- id：唯一标识 -->
@@ -21,5 +24,6 @@
     </environments>
     <mappers>
         <mapper resource="db/mybatis/MyMapper.xml"/>
+        <mapper resource="db/mybatis/MockMapper.xml"/>
     </mappers>
 </configuration>

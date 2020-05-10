@@ -27,3 +27,4 @@ target/
 .idea/
 *.db
 mysql-data/
+esdata/
